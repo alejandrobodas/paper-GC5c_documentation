@@ -1,0 +1,485 @@
+%% Copernicus Publications Manuscript Preparation Template for LaTeX Submissions
+%% ---------------------------------
+%% This template should be used for copernicus.cls
+%% The class file and some style files are bundled in the Copernicus Latex Package, which can be downloaded from the different journal webpages.
+%% For further assistance please contact Copernicus Publications at: production@copernicus.org
+%% https://publications.copernicus.org/for_authors/manuscript_preparation.html
+
+
+%% Please use the following documentclass and journal abbreviations for preprints and final revised papers.
+
+%% 2-column papers and preprints
+\documentclass[gmd, manuscript]{copernicus}
+
+
+
+%% Journal abbreviations (please use the same for preprints and final revised papers)
+% Geoscientific Model Development (gmd)
+
+
+%% \usepackage commands included in the copernicus.cls:
+%\usepackage[german, english]{babel}
+%\usepackage{tabularx}
+%\usepackage{cancel}
+%\usepackage{multirow}
+%\usepackage{supertabular}
+%\usepackage{algorithmic}
+%\usepackage{algorithm}
+%\usepackage{amsthm}
+%\usepackage{float}
+%\usepackage{subfig}
+%\usepackage{rotating}
+
+
+% Commands
+% \newcommand{\grd}{$^\mathrm{o}$}
+% \newcommand{\grds}{$^\mathrm{o}$\space}
+% \newcommand{\grdC}{$^\mathrm{o}$C}
+% \newcommand{\grdCs}{$^\mathrm{o}$C\space}
+% \newcommand{\grdN}{$^\mathrm{o}$N}
+% \newcommand{\grdNs}{$^\mathrm{o}$N\space}
+% \newcommand{\grdS}{$^\mathrm{o}$S}
+% \newcommand{\grdSs}{$^\mathrm{o}$S\space}
+% \newcommand{\grdE}{$^\mathrm{o}$E}
+% \newcommand{\grdEs}{$^\mathrm{o}$E\space}
+% \newcommand{\grdW}{$^\mathrm{o}$W}
+% \newcommand{\grdWs}{$^\mathrm{o}$W\space}
+% \newcommand{\wmm}{~Wm$^{-2}$}
+% \newcommand{\wmms}{~Wm$^{-2}$\space}
+% \newcommand{\hist}{\emph{historical}}
+% \newcommand{\piC}{\emph{piControl}}
+% \newcommand{\abrupt4co2}{\emph{abrupt\-4xCO2}}
+\newcommand{\gcVc}{GC5c}
+
+\begin{document}
+
+\title{GC5-central}
+
+
+% \Author[affil]{given_name}{surname}
+
+\Author[1][alejandro.bodas@metoffice.gov.uk]{Alejandro}{Bodas-Salcedo} %% correspondence author
+\Author[1]{John}{Rostron}
+
+\affil[1]{Met Office Hadley Centre, Exeter, United Kingdom}
+
+%% The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should be inserted.
+
+%% If an author is deceased, please mark the respective author name(s) with a dagger, e.g. "\Author[2,$\dag$]{Anton}{Smith}", and add a further "\affil[$\dag$]{deceased, 1 July 2019}".
+
+%% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
+
+
+\runningtitle{HadGEM3 GC5-central}
+
+\runningauthor{Bodas-Salcedo et al.}
+
+
+
+
+
+\received{}
+\pubdiscuss{} %% only important for two-stage journals
+\revised{}
+\accepted{}
+\published{}
+
+%% These dates will be inserted by Copernicus Publications during the typesetting process.
+
+
+\firstpage{1}
+
+\maketitle
+
+
+
+\begin{abstract}
+TEXT
+\end{abstract}
+
+
+\copyrightstatement{TEXT} %% This section is optional and can be used for copyright transfers.
+
+
+\introduction  %% \introduction[modified heading if necessary]
+The latest Global Coupled (GC) configuration of the Met Office Hadley Centre Global Environmental Model (HadGEM3) is GC5.0 \citep{xavier25gc5}.
+Development of GC5.0 (and all previous Met Office models) was driven by bottom-up parametrisation improvements and tuning to the mean climate and variability of recent decades.
+Emerging properties like the Effective Climate Sensitivity (EffCS) or the simulation of the historical record were not considered during the development process.
+The EffCS of GC5.0 is 6.6K, which is outside the baseline range of the WCRP/IPCC assessment of climate sensitivity \citep{sherwood20} and the very likely range of the IPCC AR6 \citep{ipcc21}.
+
+Here we document the development of the \gcVc configuration, based on GC5.0, but with a different set of tuning parameters.
+The development of the \gcVc configuration was driven by the need to provide a model with a reduced EffCS and an improved simulation of the historical record for climate applications.
+The development of \gcVc makes used of a large Perturbed Parameter Ensemble (PPE) of atmosphere-only simulations of the GC5.0 configuration, which was used to explore the parameter space of the model and identify a set of parameters that would lead to a reduced EffCS.
+
+The GC configuration submitted to CMIP6, GC3.1, has an Effective Climate Sensitivity (EffCS) of 5.5K.
+This value is just below the very upper limit of the robust 5\%-95\% range from the WCRP assessment on climate sensitivity, and outside their baseline range.
+
+Here we invite discussion of the approach to EffCS for the next generation climate models, based on GC5, in the light of the WCRP assessment (and subsequent assessment by IPCC AR6).
+Recent reports from the Hadley Centre Science Review Group (SRG) recommend defining a transparent approach to EffCS in the GC development process, and this paper is intended to facilitate community discussion towards a consensus position.
+Final decisions will be taken by the GC Programme Board, but overall community views will be a crucial input to the decision.
+
+During early 2021 we conducted a consultation exercise with a range of potential science users of GC5 (see Appendix).
+In this consultation, some users expressed a requirement for a mid-range EffCS (2.5-3.9K), in particular for carbon-cycle studies or other studies where additional feedbacks to the ones included in the GC configuration may operate.
+Other users expressed a requirement to span a range of EffCS that includes values in the WCRP/IPCC-assessed likely range, within a GC5 Perturbed Parameter Ensemble (PPE).
+These drivers lead to the need to consider the desirability of imposing top-down constraints on EffCS during the model development process.
+
+This document suggests some ways to incorporate the above user requirements for EffCS into the development process for the climate configurations derived from GC5, considering the information gathered during the consultation exercise with representatives of climate applications.
+The Annex contains more details about the outcomes of the consultation exercise.
+Here we summarise main ideas and solicit feedback on specific questions.
+The GC5 model is due to be frozen at the end of 2021. There will be the option to add later developments to GC5 that specifically improve key aspects of the model for climate use (desired climate sensitivity behaviour, or improved historical simulation), to make a configuration GC5clim.
+Deadline ~end 2022.
+Such developments will need to be tightly controlled and evaluated, to manage the risks of undesirable impacts on overall model performance, and to take account of staff availability at a time when there will be competing demands from HPC porting and NGMS.
+
+Two recently-initiated activities provide potential to expand consideration of EffCS in the development process:
+
+1.	Incorporation of perturbed parameter ensembles (PPE) into the development of GC5/GC5clim.
+The use of the PPE could inform the potential range of EffCS before the climate configuration is frozen, and it could be used to select a model configuration with an EffCS within a prescribed range, if this were required for specific applications.
+Analysis of climate feedbacks in PPEs of specific GAL configurations on the development path to GC5 have recently been produced, led by John Rostron, David Sexton and Yoko Tsushima.
+2.	Use of improved constraints on cloud feedbacks, following recent studies that suggest that observational proxies can be used to constrain models’ cloud feedbacks.
+Work to diagnose such feedbacks in the GC models is being developed by the Climate Feedbacks Working Group, led by Yoko Tsushima. 
+
+These activities raise several questions and challenges that need to be addressed:
+
+1. It is possible that a model version may be found that hits a desired range for EffCS, but only at the cost of degrading other metrics.
+In this case a possibility may be to have two headline model versions.
+Is it acceptable to produce more than one headline model version? Alternatives would be to have a single version choosing EffCS over other metrics, or vice versa, or some compromise.
+If we produce a second headline version targeting EffCS, what degradation in other metrics is acceptable?
+
+2. If a headline version with EffCS within a prescribed range is required, what would that target range be?
+
+3. The use of a PPE during development would require an automated, multivariate evaluation process as it is not possible to analyse validation notes for every ensemble member.
+It may also be necessary to develop high-dimensional emulators to identify promising areas of parameter space.
+This requires tools to be developed to produce the relevant metrics and emulators for each application.
+
+4. Would palaeoclimate simulations (especially cold climates, which are the main high-end constraint on EffCS in the WCRP Assessment) add value on top of the constraint that they already provide through the assessed EffCS range (e.g. additional regional information).
+If so, could they practically be incorporated in the development cycle?
+
+Detailed scoping of the work on areas 1 and 2 would be needed to develop a resourced plan.
+The work would likely require additional effort from across Climate Science, especially if we want to make progress on CMIP7/UKCPnext timescales. 
+
+Improving the simulation of the historical record has also been highlighted in recent SRG reports, and it is considered important by several user groups.
+The Historical PEG, led by Alejandro Bodas-Salcedo, aims to understand the drivers of historical temperature changes and improve the historical simulation for the right reasons.
+The relationship between the historical record and EffCS is currently under discussion in the scientific literature, but one expected outcome of the PEG will be a clearer understanding of what the historical record tells us about EffCS.
+
+We must highlight that these approaches would not guarantee that a model with a specific EffCS range or value can be delivered, but they would increase the chances of this if required and would certainly increase the robustness and transparency of the process.  
+
+The Annex provides a more detailed explanation of the activities described above, and the potential development options for GC5clim.
+
+Equilibrium Climate Sensitivity (ECS) is the global-mean equilibrium temperature change expected from a doubling of atmospheric CO¬2.
+ECS is a fundamental emergent property of the climate system, important for many different applications.
+Models’ true ECS can only be obtained using very long runs to quasi-equilibrium.
+Practically, the Effective Climate Sensitivity (EffCS) is used.
+EffCS is calculated using an extrapolation of a linear regression of annual means of an abrupt-4xCO2 experiment (Gregory et al., 2004).
+The GC configuration submitted to CMIP6, GC3.1, has an EffCS of 5.5K (Andrews et al., 2019). This value is just below the very upper limit of the robust 5\%-95\% range from Sherwood et al. (2020), and outside their baseline range.
+
+Currently, the GC process does not consider EffCS during development.
+This document proposes some changes to the GC development process so that EffCS is considered during development.
+This document considers information gathered during a set of consultation meetings with representatives of climate applications (see contributors in the acknowledgements).
+The consultation exercise was decoupled from any decision on potential model developments proposed for GC5.
+
+Table 1 summarises the main requirements that resulted from the consultation exercise. Although the original scope of the consultation was on EffCS, the Transient Climate Response (TCR) and simulation of the historical period were highlighted as important metrics by several user groups, and therefore we consider them in this proposal. The requirements for EffCS are split into two metrics:
+
+EffCS value: standard model with EffCS within a given range.
+
+EffCS range: range of EffCS spanned by a perturbed parameter ensemble (PPE) of the standard model.
+
+Table 1 shows that each metric is important (i.e. needs a requirement) for at least two applications.
+The following list expands on the details of the main requirements: 
+
+PPE sampling an EffCS range that overlaps with the multi-model range.
+Our proposal is to formulate this in a more quantitative way by using the 5\%-95\% robust range of Sherwood et al. (2020): 2.0-5.7K.
+
+A particular value of EffCS is important for single-model studies of the carbon cycle, and other applications (e.g. impacts, and feedbacks studies).
+They explore uncertainties not included in the physical model, and starting from a tail of the EffCS distribution poses a problem because even a small additional uncertainty takes the model outside any credible range (e.g. running with emissions-driven methane).
+The EffCS value should not be too far away from the current best estimate. The proposal is to use the 66\% limits of the baseline range in Sherwood et al. (2020): 2.6-3.9K.
+The main motivation for a model with a more central EffCS is the potential for exploring uncertainties in feedbacks not included in the GC configuration (e.g. simulations with emissions-driven methane, Paris agreement studies). 
+
+TCR\&TCRE are important for some applications.
+Given that TCRE is not independent of TCR, we propose to formulate this requirement in terms of TCR only.
+As with the previous requirement for an EffCS value, the proposal is to to use the 66\% limits of the baseline range in Sherwood et al. (2020): 1.5-2.2K.
+
+A good simulation of the historical record.
+This is a critical issue for decadal prediction due to drift correction, which will be a problem after GC2.
+It is also considered a very important metric of the credibility of the model performance.
+There is not a simple quantitative way of defining this, but there is a PEG dedicated to this topic.
+
+
+Other important aspects came up in the discussions: control climate, model speed, and resolution.
+The quality of the control climate is still important, e.g.: some feedbacks scale with the climatological value of a given variable; a good control climate helps reduce rejections in PPE, which may help increasing the range of sensitivities that the PPE spans.
+We haven’t included any requirement on this topic in this proposal because the current GC assessment contains large amounts of global and regional climatological metrics. We see any change in this respect as an incremental change to the current process, not a fundamental addition to the development process.
+
+Model speed, resolution and complexity are topics that are planned to be addressed on timescales longer than GC5.
+
+
+TEXT \citep{xavier25gc5}
+
+\section{Methodology}\label{sec:methodology}
+Text with citations \cite{bodassalcedo18} and \cite{bodassalcedo23}.
+
+
+\section{Evaluation of frozen configuration (including GC5.0 N96 as reference)}\label{sec:evaluation}
+Text.
+
+\subsection{Climate change simulations (focus on idealised?)}
+Text.
+
+\subsubsection{TCR, feedbacks, forcing (EffCS covered above)}
+Text.
+
+\subsubsection{Historical simulations (BS2023, SST patterns, trends)}
+Text.
+
+\subsection{Present-day climatologies}
+Text.
+\subsubsection{GC5-central in the context of the CMIP6 MME}
+Text.
+\subsubsection{Historical vs observations}
+Text.
+
+\conclusions  %% \conclusions[modified heading if necessary]
+TEXT
+
+%% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
+%% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
+
+\codeavailability{TEXT} %% use this section when having only software code available
+
+
+\dataavailability{TEXT} %% use this section when having only data sets available
+
+
+\codedataavailability{TEXT} %% use this section when having data sets and software code available
+
+
+\sampleavailability{TEXT} %% use this section when having geoscientific samples available
+
+
+\videosupplement{TEXT} %% use this section when having video supplements available
+
+
+\appendix
+\section{}    %% Appendix A
+
+\subsection{}     %% Appendix A1, A2, etc.
+
+
+\noappendix       %% use this to mark the end of the appendix section. Otherwise the figures might be numbered incorrectly (e.g. 10 instead of 1).
+
+%% Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
+
+%% Option 1: If you sorted all figures and tables into the sections of the text, please also sort the appendix figures and appendix tables into the respective appendix sections.
+%% They will be correctly named automatically.
+
+%% Option 2: If you put all figures after the reference list, please insert appendix tables and figures after the normal tables and figures.
+%% To rename them correctly to A1, A2, etc., please add the following commands in front of them:
+
+\appendixfigures  %% needs to be added in front of appendix figures
+
+\appendixtables   %% needs to be added in front of appendix tables
+
+%% Please add \clearpage between each table and/or figure. Further guidelines on figures and tables can be found below.
+
+
+
+\authorcontribution{TEXT} %% this section is mandatory
+
+\competinginterests{TEXT} %% this section is mandatory even if you declare that no competing interests are present
+
+\disclaimer{TEXT} %% optional section
+
+\begin{acknowledgements}
+TEXT
+\end{acknowledgements}
+
+
+
+
+%% REFERENCES
+
+%% The reference list is compiled as follows:
+
+% \begin{thebibliography}{}
+
+% \bibitem[AUTHOR(YEAR)]{LABEL1}
+% REFERENCE 1
+
+% \bibitem[AUTHOR(YEAR)]{LABEL2}
+% REFERENCE 2
+
+% \end{thebibliography}
+
+%% Since the Copernicus LaTeX package includes the BibTeX style file copernicus.bst,
+%% authors experienced with BibTeX only have to include the following two lines:
+%%
+\bibliographystyle{/home/users/alejandro.bodas/localTeX/copernicus/copernicus}
+\bibliography{/home/users/alejandro.bodas/localTeX/hadley.bib}
+%%
+%% URLs and DOIs can be entered in your BibTeX file as:
+%%
+%% URL = {http://www.xyz.org/~jones/idx_g.htm}
+%% DOI = {10.5194/xyz}
+
+
+%% LITERATURE CITATIONS
+%%
+%% command                        & example result
+%% \citet{jones90}|               & Jones et al. (1990)
+%% \citep{jones90}|               & (Jones et al., 1990)
+%% \citep{jones90,jones93}|       & (Jones et al., 1990, 1993)
+%% \citep[p.~32]{jones90}|        & (Jones et al., 1990, p.~32)
+%% \citep[e.g.,][]{jones90}|      & (e.g., Jones et al., 1990)
+%% \citep[e.g.,][p.~32]{jones90}| & (e.g., Jones et al., 1990, p.~32)
+%% \citeauthor{jones90}|          & Jones et al.
+%% \citeyear{jones90}|            & 1990
+
+
+
+%% FIGURES
+
+%% When figures and tables are placed at the end of the MS (article in one-column style), please add \clearpage
+%% between bibliography and first table and/or figure as well as between each table and/or figure.
+
+% The figure files should be labelled correctly with Arabic numerals (e.g. fig01.jpg, fig02.png).
+
+
+%% ONE-COLUMN FIGURES
+
+%%f
+\begin{figure}[t]
+\includegraphics[width=8.3cm]{/data/users/alejandro.bodas/mo_github_issues/mo-abodas0001/Figure_template.png}
+\caption{Example figure.}
+\end{figure}
+%
+%%% TWO-COLUMN FIGURES
+%
+%%f
+%\begin{figure*}[t]
+%\includegraphics[width=12cm]{FILE NAME}
+%\caption{TEXT}
+%\end{figure*}
+%
+%
+%%% TABLES
+%%%
+%%% The different columns must be seperated with a & command and should
+%%% end with \\ to identify the column brake.
+%
+%%% ONE-COLUMN TABLE
+%
+%%t
+%\begin{table}[t]
+%\caption{TEXT}
+%\begin{tabular}{column = lcr}
+%\tophline
+%
+%\middlehline
+%
+%\bottomhline
+%\end{tabular}
+%\belowtable{} % Table Footnotes
+%\end{table}
+%
+%%% TWO-COLUMN TABLE
+%
+%%t
+%\begin{table*}[t]
+%\caption{TEXT}
+%\begin{tabular}{column = lcr}
+%\tophline
+%
+%\middlehline
+%
+%\bottomhline
+%\end{tabular}
+%\belowtable{} % Table Footnotes
+%\end{table*}
+%
+%%% LANDSCAPE TABLE
+%
+%%t
+%\begin{sidewaystable*}[t]
+%\caption{TEXT}
+%\begin{tabular}{column = lcr}
+%\tophline
+%
+%\middlehline
+%
+%\bottomhline
+%\end{tabular}
+%\belowtable{} % Table Footnotes
+%\end{sidewaystable*}
+%
+%
+%%% MATHEMATICAL EXPRESSIONS
+%
+%%% All papers typeset by Copernicus Publications follow the math typesetting regulations
+%%% given by the IUPAC Green Book (IUPAC: Quantities, Units and Symbols in Physical Chemistry,
+%%% 2nd Edn., Blackwell Science, available at: http://old.iupac.org/publications/books/gbook/green_book_2ed.pdf, 1993).
+%%%
+%%% Physical quantities/variables are typeset in italic font (t for time, T for Temperature)
+%%% Indices which are not defined are typeset in italic font (x, y, z, a, b, c)
+%%% Items/objects which are defined are typeset in roman font (Car A, Car B)
+%%% Descriptions/specifications which are defined by itself are typeset in roman font (abs, rel, ref, tot, net, ice)
+%%% Abbreviations from 2 letters are typeset in roman font (RH, LAI)
+%%% Vectors are identified in bold italic font using \vec{x}
+%%% Matrices are identified in bold roman font
+%%% Multiplication signs are typeset using the LaTeX commands \times (for vector products, grids, and exponential notations) or \cdot
+%%% The character * should not be applied as mutliplication sign
+%
+%
+%%% EQUATIONS
+%
+%%% Single-row equation
+%
+%\begin{equation}
+%
+%\end{equation}
+%
+%%% Multiline equation
+%
+%\begin{align}
+%& 3 + 5 = 8\\
+%& 3 + 5 = 8\\
+%& 3 + 5 = 8
+%\end{align}
+%
+%
+%%% MATRICES
+%
+%\begin{matrix}
+%x & y & z\\
+%x & y & z\\
+%x & y & z\\
+%\end{matrix}
+%
+%
+%%% ALGORITHM
+%
+%\begin{algorithm}
+%\caption{...}
+%\label{a1}
+%\begin{algorithmic}
+%...
+%\end{algorithmic}
+%\end{algorithm}
+%
+%
+%%% CHEMICAL FORMULAS AND REACTIONS
+%
+%%% For formulas embedded in the text, please use \chem{}
+%
+%%% The reaction environment creates labels including the letter R, i.e. (R1), (R2), etc.
+%
+%\begin{reaction}
+%%% \rightarrow should be used for normal (one-way) chemical reactions
+%%% \rightleftharpoons should be used for equilibria
+%%% \leftrightarrow should be used for resonance structures
+%\end{reaction}
+%
+%
+%%% PHYSICAL UNITS
+%%%
+%%% Please use \unit{} and apply the exponential notation
+
+
+\end{document}
